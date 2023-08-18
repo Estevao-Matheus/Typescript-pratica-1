@@ -1,3 +1,5 @@
+import { Negociacoes } from "../models/negociações.js";
+
 export class NegociacoesVIew {
     
     private elemento: HTMLElement;
@@ -5,7 +7,7 @@ export class NegociacoesVIew {
     constructor(selector: string) {
         this.elemento = document.querySelector(selector);
     }
-    template () : string {
+    template (model: Negociacoes) : string {
         return  `
            <table class="table table-hover table-bordered">
                 <thead>
@@ -16,12 +18,23 @@ export class NegociacoesVIew {
                     </tr>
                 </thead>
                 <tbody>
-                </tbody>        
+                    ${model.lista().map(negociacao => {
+                        return `
+                          <tr>
+                            <td>${new Intl.DateTimeFormat().format(negociacao.data)}</td>
+                            <td>${negociacao.quantidade}</td>
+                            <td>${negociacao.valor}</td>
+                          </tr>
+                        `;
+                    }).join('')}
+               </tbody>        
            </table> 
         `;
     }
-    update(): void {
-        this.elemento.innerHTML = this.template();
+    update(model: Negociacoes): void {
+        const template = this.template(model);
+        console.log(template);
+        this.elemento.innerHTML = this.template(model);
     }
 }
 
