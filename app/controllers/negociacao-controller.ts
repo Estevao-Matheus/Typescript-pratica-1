@@ -9,15 +9,16 @@ export class NegociacaoController {
     private inputQuantidade: HTMLInputElement;
     private inputValor: HTMLInputElement;
     private negociacoes: Negociacoes = new Negociacoes(); 
-    private negociacoesView = new NegociacoesVIew('#negociacoesView');
+    private negociacoesView = new NegociacoesVIew('#negociacoesView', true);
     private mensagemView = new MensagemVIew('#mensagemView');
 
     constructor() {
-        this.inputData = document.querySelector('#data');
-        this.inputQuantidade = document.querySelector('#quantidade');
-        this.inputValor = document.querySelector('#valor');
-        this.negociacoesView.update(this.negociacoes);
+        this.inputData =<HTMLInputElement> document.querySelector('#data');
+        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
+        this.inputValor = document.querySelector('#valor') as HTMLInputElement;
+        this.negociacoesView.update(this.negociacoes) ;
     }
+    
     public adiciona() : void {
         const negociacao = Negociacao.criaDe(
             this.inputData.value,
